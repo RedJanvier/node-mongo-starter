@@ -2,10 +2,10 @@
   "name": "starter-node-mongo",
   "version": "1.0.0",
   "description": "My Stater Template for a fully flegged NodeJS Server with a MongoDB Database",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node server",
-    "dev": "nodemon server"
+    "start": "node app",
+    "dev": "nodemon app"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,6 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.3"
   }
 }

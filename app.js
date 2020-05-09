@@ -1,14 +1,22 @@
+require('dotenv').config({ path: './config/config.env' });
 const express = require('express');
+const colors = require('colors');
+
+// Files
+const database = require('./config/database'); // connect to MongoDB Database
+const index = require('./routes/index');
+
+//initialization
 const app = express();
+database();
+
+// Settings
+const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 
-// Routes
-const index = require('./routes/index');
-const users = require('./routes/users');
-
 // Routes Setup
 app.use('/api/v1/', index);
-app.use('/api/v1/users', users);
 
-module.exports = app;
+// Server Listens
+app.listen(PORT, console.log(`Server Started in ${process.env.NODE_ENV} mode at http://localhost:${PORT}/api/v1/`));
