@@ -1,12 +1,11 @@
-import { hash as _hash } from "bcrypt";
+import { hash as _hash } from 'bcrypt';
 
-// Models
-import User from "../models/user";
+import User from '../models/user';
 
 // @desc      Get All Users
 // @route     GET /api/v1/users/
 // @access    Public
-export async function readAll(req, res, next) {
+export async function readAll(req, res) {
   try {
     const users = await User.find();
 
@@ -32,7 +31,7 @@ export async function readAll(req, res, next) {
 // @desc      Get a single user
 // @route     GET /api/v1/users/id
 // @access    Public
-export async function read(req, res, next) {
+export async function read(req, res) {
   try {
     const { id } = req.params;
 
@@ -54,7 +53,7 @@ export async function read(req, res, next) {
 // @desc      Create a user
 // @route     POST /api/v1/users/
 // @access    Public
-export async function create(req, res, next) {
+export async function create(req, res) {
   try {
     const { name, email, password, age } = req.body;
 
@@ -71,7 +70,7 @@ export async function create(req, res, next) {
           data: user,
         });
       } else {
-        throw new Error("User Not Created!");
+        throw new Error('User Not Created!');
       }
     });
   } catch (err) {
@@ -86,7 +85,7 @@ export async function create(req, res, next) {
 // @desc      Update a single user
 // @route     PUT /api/v1/users/id
 // @access    Public
-export async function update(req, res, next) {
+export async function update(req, res) {
   try {
     const { id } = req.params;
 
@@ -111,7 +110,7 @@ export async function update(req, res, next) {
 // @desc      Delete a single user
 // @route     DELETE /api/v1/users/id
 // @access    Public
-const _delete = async (req, res, next) => {
+const _delete = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id).deleteOne();

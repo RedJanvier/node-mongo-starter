@@ -1,10 +1,10 @@
 // Models
-import Index from "../models/index";
+import Index from '../models/index';
 
 // @desc      Test Route
 // @route     GET /api/v1/
 // @access    Public
-export async function testRoute(req, res, next) {
+export async function testRoute(req, res) {
   try {
     const indexes = await Index.find();
 

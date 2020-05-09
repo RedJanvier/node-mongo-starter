@@ -1,9 +1,9 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const IndexSchema = new Schema({
   text: {
     type: String,
-    require: [true, "Please Provide some text for the test"],
+    require: [true, 'Please Provide some text for the test'],
   },
   createdAt: {
     type: Date,
@@ -11,4 +11,4 @@ const IndexSchema = new Schema({
   },
 });
 
-export default model("Index", IndexSchema);
+export default model('Index', IndexSchema);

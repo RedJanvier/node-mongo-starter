@@ -1,16 +1,12 @@
-const router = require('express').Router();
+import { Router } from 'express';
 
-// Controllers
-const index = require('../controllers/index');
+import { testRoute } from '../controllers/index';
+import users from './users';
 
-// Other Routes
-const users = require('./users');
+const router = Router();
 
-router
-    .route('/')
-    .get(index.testRoute);
+router.route('/').get(testRoute);
 
-router
-    .use('/users', users);
+router.use('/users', users);
 
-module.exports = router;
+export default router;
