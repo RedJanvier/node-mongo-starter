@@ -1,17 +1,17 @@
-const router = require('express').Router();
+import { Router } from 'express';
 
-// Controllers
-const users = require('../controllers/users');
+import {
+  readAll,
+  create,
+  read,
+  update,
+  delete as deleteUser,
+} from '../controllers/users';
 
-router
-    .route('/')
-    .get(users.readAll)
-    .post(users.create);
+const router = Router();
 
-router
-    .route('/:id')
-    .get(users.read)
-    .put(users.update)
-    .delete(users.delete);
+router.route('/').get(readAll).post(create);
 
-module.exports = router;
+router.route('/:id').get(read).put(update).delete(deleteUser);
+
+export default router;
