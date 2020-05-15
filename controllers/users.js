@@ -1,131 +1,91 @@
 import { hash as _hash } from 'bcrypt';
 
 import User from '../models/user';
+import asyncHandler from '../middlewares/async';
 
 // @desc      Get All Users
 // @route     GET /api/v1/users/
 // @access    Public
-export async function readAll(req, res) {
-  try {
-    const users = await User.find();
+export const readAll = asyncHandler(async (req, res) => {
+  const users = await User.find();
 
-    res.status(200).json({
-      success: true,
-      count: users.length,
-      data: users.map((user) => ({
-        _id: user._id,
-        name: user.name,
-        age: user.age,
-        email: user.email,
-      })),
-    });
-  } catch (err) {
-    console.log(`Error: ${err.message}`.red);
-    res.status(500).json({
-      success: false,
-      error: `Server Error`,
-    });
-  }
-}
+  return res.status(200).json({
+    success: true,
+    count: users.length,
+    data: users.map((user) => ({
+      _id: user._id,
+      name: user.name,
+      age: user.age,
+      email: user.email,
+    })),
+  });
+});
 
 // @desc      Get a single user
 // @route     GET /api/v1/users/id
 // @access    Public
-export async function read(req, res) {
-  try {
-    const { id } = req.params;
+export const read = asyncHandler(async (req, res) => {
+  const { id } = req.params;
 
-    const user = await User.findById(id);
+  const user = await User.findById(id);
 
-    res.status(200).json({
-      success: true,
-      data: user,
-    });
-  } catch (err) {
-    console.log(`Error: ${err.message}`.red);
-    res.status(500).json({
-      success: false,
-      error: `Server Error`,
-    });
-  }
-}
+  return res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
 
 // @desc      Create a user
 // @route     POST /api/v1/users/
 // @access    Public
-export async function create(req, res) {
-  try {
-    const { name, email, password, age } = req.body;
+export const create = asyncHandler(async (req, res) => {
+  const { name, email, password, age } = req.body;
 
-    _hash(password, 10, async (err, hash) => {
-      if (err) {
-        throw new Error(err.message);
-      }
+  _hash(password, 10, async (err, hash) => {
+    if (err) {
+      throw new Error(err.message);
+    }
 
-      const user = await User.create({ name, age, email, password: hash });
+    const user = await User.create({ name, age, email, password: hash });
 
-      if (user) {
-        res.status(201).json({
-          success: true,
-          data: user,
-        });
-      } else {
-        throw new Error('User Not Created!');
-      }
-    });
-  } catch (err) {
-    console.log(`Error: ${err.message}`.red);
-    res.status(500).json({
-      success: false,
-      error: `Server Error`,
-    });
-  }
-}
+    if (user) {
+      return res.status(201).json({
+        success: true,
+        data: { ...user, password: null },
+      });
+    }
+    throw new Error('User Not Created!');
+  });
+});
 
 // @desc      Update a single user
 // @route     PUT /api/v1/users/id
 // @access    Public
-export async function update(req, res) {
-  try {
-    const { id } = req.params;
+export const update = asyncHandler(async (req, res) => {
+  const { id } = req.params;
 
-    const user = await User.findOneAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+  const user = await User.findOneAndUpdate(id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-    res.status(200).json({
-      success: true,
-      data: user,
-    });
-  } catch (err) {
-    console.log(`Error: ${err.message}`.red);
-    res.status(500).json({
-      success: false,
-      error: `Server Error`,
-    });
-  }
-}
+  return res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
 
 // @desc      Delete a single user
 // @route     DELETE /api/v1/users/id
 // @access    Public
-const _delete = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findById(id).deleteOne();
-    console.log(user);
-    res.status(201).json({
-      success: true,
-      count: user.deleteCount,
-      data: {},
-    });
-  } catch (err) {
-    console.log(`Error: ${err.message}`.red);
-    res.status(500).json({
-      success: false,
-      error: `Server Error`,
-    });
-  }
-};
+const _delete = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).deleteOne();
+
+  return res.status(201).json({
+    success: true,
+    count: user.deleteCount,
+    data: {},
+  });
+});
 export { _delete as delete };
