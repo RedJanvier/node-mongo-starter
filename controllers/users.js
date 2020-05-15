@@ -42,9 +42,7 @@ export const create = asyncHandler(async (req, res) => {
   const { name, email, password, age } = req.body;
 
   _hash(password, 10, async (err, hash) => {
-    if (err) {
-      throw new Error(err.message);
-    }
+    if (err) throw new Error(err.message);
 
     const user = await User.create({ name, age, email, password: hash });
 
