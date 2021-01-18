@@ -2,7 +2,9 @@ import { connect } from 'mongoose';
 
 const connectDB = async () => {
   try {
-    const conn = await connect(process.env.MONGO_URI, {
+    const { MONGO_URI, MONGO_URI_TEST, NODE_ENV } = process.env;
+    const connectionString = NODE_ENV === 'test' ? MONGO_URI_TEST : MONGO_URI;
+    const conn = await connect(connectionString, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,

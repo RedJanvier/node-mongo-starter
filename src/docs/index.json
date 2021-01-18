@@ -1,0 +1,136 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "The best node with mongo starter.",
+    "version": "1.0.0",
+    "title": "Node Mongo Starter",
+    "contact": {
+      "name": "RedJanvier",
+      "email": "janvierntwali@gmail.com"
+    }
+  },
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations related to authentication"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "paths": {
+    "/user/login": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Login a user with email & password",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successfully",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "401": {
+            "description": "Wrong credentials (password)"
+          }
+        }
+      }
+    },
+    "/user/signup": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Signup user",
+        "description": "Provide proper information to create account",
+        "operationId": "registerUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Signup"
+            },
+            "required": true
+          }
+        ],
+
+        "responses": {
+          "201": {
+            "description": "User created successfully ",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "400": {
+            "description": "Operation failed"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Login": {
+      "type": "object",
+      "required": ["email", "password"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Signup": {
+      "type": "object",
+      "required": ["email", "password", "name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "required": ["success", "status"],
+      "properties": {
+        "shccess": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "LoginResponse"
+      }
+    }
+  }
+}
