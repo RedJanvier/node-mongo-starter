@@ -19,7 +19,7 @@ class UserControllers {
 
     /**
      * @desc      Get a single user
-     * @route     GET /api/v1/users/id
+     * @route     GET /api/v1/users/:id
      * @access    Public
      */
     this.read = asyncHandler(async (req, res) => {
@@ -90,7 +90,7 @@ class UserControllers {
 
     /**
      * @desc      Update a single user
-     * @route     PUT /api/v1/users/id
+     * @route     PUT /api/v1/users/:id
      * @access    Public
      */
     this.update = asyncHandler(async (req, res) => {
@@ -104,7 +104,7 @@ class UserControllers {
 
     /**
      * @desc      Delete a single user
-     * @route     DELETE /api/v1/users/id
+     * @route     DELETE /api/v1/users/:id
      * @access    Public
      */
     this.delete = asyncHandler(async (req, res) => {

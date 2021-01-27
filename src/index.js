@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import 'colors';
 import 'dotenv/config';
 import cors from 'cors';
