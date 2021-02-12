@@ -1,42 +1,42 @@
-# # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-# name: Node Mongo CI
+name: Node Mongo CI
 
-# on:
-#   pull_request:
-#     branches:
-#       - master
-#       - develop
-#   push:
-#     branches:
-#       - develop
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+  push:
+    branches:
+      - develop
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     strategy:
-#       matrix:
-#         node-version: [12.x]
+    strategy:
+      matrix:
+        node-version: [12.x]
 
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Use Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: ${{ matrix.node-version }}
-#       - run: npm install
-#       - run: npm test
-#         env:
-#           PORT: 4000
-#           BASE_URL: http://localhost:4000
-#           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-#           MONGO_URI_TEST: ${{ secrets.MONGO_URI_TEST }}
-#           EMAIL: ${{ secrets.EMAIL }}
-#           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-#       # - run: npm run coveralls
-#       # - uses: tintef/nyc-reporter-action
-#       #   with:
-#       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       #     REPORTER: 'text' # defaults to 'text-summary'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm test
+        env:
+          PORT: 4000
+          BASE_URL: http://localhost:4000
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          MONGO_URI_TEST: ${{ secrets.MONGO_URI_TEST }}
+          EMAIL: ${{ secrets.EMAIL }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+      # - run: npm run coveralls
+      # - uses: tintef/nyc-reporter-action
+      #   with:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     REPORTER: 'text' # defaults to 'text-summary'
